@@ -110,16 +110,17 @@ const login = async (req, res) => {
     if (!isMatch) {
       return res.status(400).json({ msg: "Invalid Credentials" });
     }
+
     const payload = {
       id: user._id,
       email: user.email,
       username: user.username,
+      isVerified: user.isVerified,
     };
     console.log(payload);
-    jwt.sign(payload, process.env.JWT_SECRET, (err, token) => {
-      if (err) throw err;
-      res.json({ token, user: payload });
-    });
+    const token = generateTokenAndSetCookie(payload, res);
+    res.status(200).json({ token, user: payload});
+    
   } catch (err) {
     return res.status(500).json({ Error: err.message });
   }

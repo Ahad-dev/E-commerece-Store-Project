@@ -1,5 +1,4 @@
 
-
 export const regsiter = async(body)=>{
     const res = await fetch("http://localhost:5000/api/auth/register"
     ,{

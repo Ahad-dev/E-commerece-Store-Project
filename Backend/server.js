@@ -4,12 +4,15 @@ const dotenv = require("dotenv");
 const bodyParser = require('body-parser');
 const {ConnectDB} =require('./config/db')
 const cors = require('cors')
+const cookieParser = require('cookie-parser');
+
 
 //Load envioutment Vaiables
 dotenv.config()
 
 ConnectDB();
-
+// Use cookie-parser middleware
+app.use(cookieParser());
 app.use(cors());
 app.use(bodyParser.json());
 app.use(express.urlencoded({extended:false}));

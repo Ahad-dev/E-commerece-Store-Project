@@ -12,7 +12,6 @@ const getUser = async(req,res)=>{
     
 
 }
-
 //Update User
 const updateUser = async(req,res)=>{
     const {email,username,address,phoneNumber} = req.body;

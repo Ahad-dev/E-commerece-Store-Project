@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const admin = require("../middlewares/admin");
-const auth = require("../middlewares/authMiddleware");
+const {auth} = require("../middlewares/authMiddleware");
 const {
   getProducts,
   getProdunctById,

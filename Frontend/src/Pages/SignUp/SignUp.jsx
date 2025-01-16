@@ -25,8 +25,9 @@ const SignUp = ({setUser}) => {
       toast.error("Please fill all the fields")
     }else{
       setError(null)
-      const token = await regsiter(body)
-      localStorage.setItem("token",token);
+      const data = await regsiter(body)
+      localStorage.setItem("token",data.token);
+      localStorage.setItem("user",data.user);
       login();
       //wait for 1 second
       toast.success("Account created successfully")

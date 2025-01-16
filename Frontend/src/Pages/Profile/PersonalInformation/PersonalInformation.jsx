@@ -16,6 +16,8 @@ const PersonalInformation = ({user,setUser}) => {
     console.log(localStorage.getItem("user"))
   },[])
 
+  console.log(user)
+
   const handleUpdate = async()=>{
     console.log(user)
     const data = await updateUser(user)

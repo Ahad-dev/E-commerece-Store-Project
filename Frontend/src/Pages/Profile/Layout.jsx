@@ -1,16 +1,35 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import ProfileAvatar from '../../Components/Avatar/ProfileAvatar'
 import ProfileSideBar from "../../Components/ProfileSideBar/ProfileSideBar"
 import { Link, Outlet, Navigate } from 'react-router-dom'
 import { useAuth } from '../../Context/AuthContext'
+import { getUser } from '../../Services/User'
+import EmailNotVerifyBadge from '../../Components/VerifyEmail/EmailNotVerifyBadge'
 
 const Layout = () => {
   const { isAuthenticated,logout } = useAuth();
+  const [verified,setVerified] = useState(false);
+  const [loading,setLoading] = useState(true);
+  useEffect( ()=>{
 
+    const fetchUser = async()=>{
+      const data = await getUser();
+      console.log(data)
+      setLoading(false);
+      console.log(data)
+      if(data.user.isVerified){
+        setVerified(true);
+      }
+
+    }
+    fetchUser()
+  },[])
   const handleLogout = () => {
     localStorage.removeItem("token")
     logout();
   };
+
+
   return ( isAuthenticated ? (
     <>
       <div className='flex justify-end '>
@@ -23,7 +42,11 @@ const Layout = () => {
           <button onClick={handleLogout}>Logout</button> {/* Add a logout button */}
         </div>
         <main className='p-10 w-[80vw] flex flex-col gap-24 max-lg:w-full'>
-          <Outlet />
+          {loading?<p>loading...</p>:
+            verified?
+            <Outlet />:
+            <EmailNotVerifyBadge/>
+          }
         </main>
       </div>
     </>

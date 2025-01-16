@@ -9,6 +9,7 @@ export const getUser = async()=>{
         body:JSON.stringify({email})
       
       })
+      console.log(res)
       return res.json();
 
 }
