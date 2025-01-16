@@ -43,18 +43,17 @@ const register = async (req, res) => {
 
     await sendVerificationEmail(verificationCode, email);
 
+    const payload = {
+      id: newUser._id,
+      email: newUser.email,
+      username: newUser.username,
+      isVerified: newUser.isVerified,
+      role: newUser.role,
+    };
+
     res
       .status(201)
-      .json({
-        token,
-        user: {
-          id: newUser._id,
-          username: newUser.username,
-          email: newUser.email,
-          isVerified: newUser.isVerified,
-        },
-        message: "User Created Successfully",
-      });
+      .json({ token, user: payload});
   } catch (error) {
     return res.status(500).json({ Error: error.message });
   }
@@ -66,19 +65,19 @@ const register = async (req, res) => {
 const verifyEmail = async (req, res) => {
     try{
         
-        const {verificationCode} = req.body;
+        const {code} = req.body;
         console.log(req);
-        console.log(verificationCode);
-        const user = await User.findOne({verificationToken:verificationCode,verificationTokenExpiresAt:{$gt:Date.now()}});
+        console.log(code);
+        const user = await User.findOne({verificationToken:code,verificationTokenExpiresAt:{$gt:Date.now()}});
 
         if(!user){
-            return res.status(400).json({message:"Invalid or Expired Verification Code"})
+            return res.status(400).json({message:"Invalid or Expired Verification Code",success:false})
         }
 
-        const isSame = user.verificationToken === verificationCode;
+        const isSame = user.verificationToken === code;
 
         if(!isSame){
-            return res.status(400).json({message:"Invalid Verification Code"})
+            return res.status(400).json({message:"Invalid Verification Code",success:false})
         }
 
         user.isVerified = true;
@@ -89,11 +88,11 @@ const verifyEmail = async (req, res) => {
         await sendWelcomeEmail(user.email,user.username);
 
         
-        res.status(200).json({message:"Email Verified Successfully"})
+        res.status(200).json({message:"Email Verified Successfully",success:true});
 
 
     }catch(err){
-        return res.status(500).json({Error:err.message})
+        return res.status(500).json({Error:err.message,success:false})
     }
 }
 
@@ -116,8 +115,9 @@ const login = async (req, res) => {
       email: user.email,
       username: user.username,
       isVerified: user.isVerified,
+      role: user.role,
     };
-    console.log(payload);
+    console.log({payload});
     const token = generateTokenAndSetCookie(payload, res);
     res.status(200).json({ token, user: payload});
     
@@ -136,8 +136,37 @@ const logout = async (req, res) => {
   }
 };
 
+const sendVerificationCode = async (req, res) => {
+  try {
+    const { email } = req.body;
+    const user = await User.findOne({ email });
+    if(!user){
+        return res.status(400).json({message:"User Not Found"})
+    }
+
+    const verificationCode = generateVerificationCode();
+    const verificationTokenExpiresAt = Date.now() + 10 * 60 * 1000; // 10 minutes
+
+    user.verificationToken = verificationCode;
+    user.verificationTokenExpiresAt = verificationTokenExpiresAt;
+
+    await user.save();
+
+    await sendVerificationEmail(verificationCode, email);
+
+    res.status(200).json({message:"Verification Code Sent Successfully" ,success:true});
+
+  }catch(err){
+    return res.status(500).json({Error:err.message})
+  }
+}
+
+
+
 module.exports = {
   login,
   register,
-  verifyEmail
+  verifyEmail,
+  logout,
+  sendVerificationCode
 };

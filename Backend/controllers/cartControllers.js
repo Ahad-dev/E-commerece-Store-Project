@@ -37,9 +37,9 @@ const addItemToCart = async (req, res) => {
     }
     cart.totalPrice += product.price * quantity;
     await cart.save();
-    return res.json(cart);
+    return res.json({cart, message: "Item added to cart" , success:true});
   } catch (error) {
-    return res.status(500).json({ error: error.message });
+    return res.status(500).json({ message: error.message , success:false});
   }
 };
 

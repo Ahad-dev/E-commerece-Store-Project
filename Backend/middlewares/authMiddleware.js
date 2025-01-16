@@ -3,12 +3,13 @@ const User = require('../models/userModel');
 require('dotenv').config
 
 const auth = async (req,res,next)=>{
-    // const token = req.header('x-auth-token');
-    // console.log(token);
+    const token = req.header('x-auth-token');
+    console.log(token);
     
     // get all item stored in cookie
-    const token = req.cookies.token;
+    // const token = req.cookies.token;
     
+    // console.log(token);
 
     if(!token) return res.status(401).json({massage:"No token, authorization denied"});
     try{
@@ -16,13 +17,14 @@ const auth = async (req,res,next)=>{
         req.user = user;
         next();
     }catch(error){
-        res.status(401).json({massage:"Token is not valid"});
+        res.status(401).json({massage:"Login or Register add Item to Cart",success:false});
     }
 }
 
 const isVerified = async (req,res,next)=>{
     try{
         const user = await User.findOne({email:req.user.email});
+        console.log(user);
         if(!user.isVerified){
             return res.status(401).json({massage:"Please verify your email",success:false});
         }

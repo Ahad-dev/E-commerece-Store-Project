@@ -17,6 +17,7 @@ import { AuthProvider } from "./Context/AuthContext";
 import UserProtectedRoute from "./routes/UserProtectedRoute";
 import { addItemtoCart, CartOfUser, DeleteItemFromCart, RemoveCart } from "./Services/Cart";
 import {Toaster,toast} from 'react-hot-toast'
+import VerifyEmail from "./Pages/VerifyEmail/VerifyEmail";
 
 const App = () => {
   const [user,setUser] = useState({
@@ -42,8 +43,13 @@ const App = () => {
 
   const handleCart = async (id) => {
     const data = await addItemtoCart(id, 1);
-    toast.success("Added to Cart")
     console.log(data);
+    if(!data.success){
+      toast.error(`${data.massage}`)
+    }else{
+      toast.success("Added to Cart")
+    }
+
     setCart(data);
   };
   const handleDelete = async(id) => {
@@ -87,6 +93,8 @@ const App = () => {
             />
             <Route path="/login" exact element={<Login setUser = {setUser} />} />
             <Route path="/signup" exact element={<SignUp setUser = {setUser} />} />
+            <Route path="/verify" exact element={<VerifyEmail />} />
+            
           </Route>
           <Route element={<Layout />}>
             <Route

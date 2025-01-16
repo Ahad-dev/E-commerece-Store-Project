@@ -27,7 +27,7 @@ const SignUp = ({setUser}) => {
       setError(null)
       const data = await regsiter(body)
       localStorage.setItem("token",data.token);
-      localStorage.setItem("user",data.user);
+      localStorage.setItem("user",data.user.email);
       login();
       //wait for 1 second
       toast.success("Account created successfully")

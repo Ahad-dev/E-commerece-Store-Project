@@ -13,7 +13,11 @@ dotenv.config()
 ConnectDB();
 // Use cookie-parser middleware
 app.use(cookieParser());
-app.use(cors());
+app.use(cors({
+    //allow all origin
+    origin:true,
+    credentials:true
+}));
 app.use(bodyParser.json());
 app.use(express.urlencoded({extended:false}));
 

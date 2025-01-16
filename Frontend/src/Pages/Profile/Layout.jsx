@@ -10,6 +10,7 @@ const Layout = () => {
   const { isAuthenticated,logout } = useAuth();
   const [verified,setVerified] = useState(false);
   const [loading,setLoading] = useState(true);
+  console.log({verified})
   useEffect( ()=>{
 
     const fetchUser = async()=>{
@@ -17,7 +18,7 @@ const Layout = () => {
       console.log(data)
       setLoading(false);
       console.log(data)
-      if(data.user.isVerified){
+      if(data.isVerified){
         setVerified(true);
       }
 

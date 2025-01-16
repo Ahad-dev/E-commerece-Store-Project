@@ -2,6 +2,7 @@ export const  addItemtoCart = async(productId,quantity)=>{
     console.log(localStorage.getItem("token"))
     const res = await fetch("http://localhost:5000/api/cart",{
         method:"POST",
+        credentials: 'include', // Ensure cookies are included in the request
         headers:{
             "Content-type":"application/json",
             'x-auth-token':localStorage.getItem("token")
@@ -14,6 +15,7 @@ export const  addItemtoCart = async(productId,quantity)=>{
 export const decreaseQuantityFromCart = async(productId)=>{
     const res = await fetch("http://localhost:5000/api/cart",{
         method:"PUT",
+        credentials: 'include', // Ensure cookies are included in the request
         headers:{
             "Content-type":"application/json",
             'x-auth-token':localStorage.getItem("token")
@@ -26,6 +28,7 @@ export const decreaseQuantityFromCart = async(productId)=>{
 export const DeleteItemFromCart = async(productId)=>{
     const res = await fetch("http://localhost:5000/api/cart",{
         method:"DELETE",
+        credentials: 'include', // Ensure cookies are included in the request
         headers:{
             "Content-type":"application/json",
             'x-auth-token':localStorage.getItem("token")
@@ -38,6 +41,7 @@ export const DeleteItemFromCart = async(productId)=>{
 export const CartOfUser = async()=>{
     const res = await fetch("http://localhost:5000/api/cart",{
         method:"GET",
+        credentials: 'include', // Ensure cookies are included in the request
         headers:{
             "x-auth-token":localStorage.getItem("token")
         }
@@ -52,6 +56,7 @@ export const CartOfUser = async()=>{
 export const RemoveCart = async()=>{
     const res = await fetch("http://localhost:5000/api/cart/clear",{
         method:"DELETE",
+        credentials: 'include', // Ensure cookies are included in the request
         headers:{
             "x-auth-token":localStorage.getItem("token")
 

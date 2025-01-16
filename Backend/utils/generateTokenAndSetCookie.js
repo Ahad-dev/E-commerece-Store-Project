@@ -7,7 +7,8 @@ const generateTokenAndSetCookie = (user , res) => {
         email:user.email,
         username:user.username,
         fullname:user.fullname,
-        isVerified:user.isVerified
+        isVerified:user.isVerified,
+        role:user.role
     }
     console.log(process.env.JWT_SECRET)
     const token = jwt.sign(payload,process.env.JWT_SECRET,{expiresIn:'7d'});
