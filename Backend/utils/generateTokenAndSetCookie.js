@@ -2,16 +2,17 @@ const jwt = require('jsonwebtoken');
 
 
 const generateTokenAndSetCookie = (user , res) => {
-    const payload = {
-        id:user._id,
-        email:user.email,
-        username:user.username,
-        fullname:user.fullname,
-        isVerified:user.isVerified,
-        role:user.role
-    }
+    console.log(user._id);
+    // const payload = {
+    //     id:user._id,
+    //     email:user.email,
+    //     username:user.username,
+    //     fullname:user.fullname,
+    //     isVerified:user.isVerified,
+    //     role:user.role
+    // }
     console.log(process.env.JWT_SECRET)
-    const token = jwt.sign(payload,process.env.JWT_SECRET,{expiresIn:'7d'});
+    const token = jwt.sign(user,process.env.JWT_SECRET,{expiresIn:'7d'});
 
     // Set cookie
     res.cookie('token',token,{

@@ -60,14 +60,15 @@ export const RemoveFromFavourite = async(id)=>{
 }
 
 export const getFavourite = async()=>{
+  console.log(JSON.stringify({email:localStorage.getItem("user")}))
   const res = await fetch('http://localhost:5000/api/user/',{
     method:"GET",
     credentials: 'include', // Ensure cookies are included in the request
     headers:{
-      "x-auth-token":localStorage.getItem("token")
-    }
+      "x-auth-token":localStorage.getItem("token"),
+    },
   });
   const data = await  res.json();
-  console.log(data)
+  console.log(data);
   return data;
 }

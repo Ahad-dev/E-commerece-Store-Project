@@ -50,7 +50,7 @@ const App = () => {
       toast.success("Added to Cart")
     }
 
-    setCart(data);
+    setCart(data.cart);
   };
   const handleDelete = async(id) => {
     let cartP = {...cart};
@@ -94,7 +94,6 @@ const App = () => {
             <Route path="/login" exact element={<Login setUser = {setUser} />} />
             <Route path="/signup" exact element={<SignUp setUser = {setUser} />} />
             <Route path="/verify" exact element={<VerifyEmail />} />
-            
           </Route>
           <Route element={<Layout />}>
             <Route

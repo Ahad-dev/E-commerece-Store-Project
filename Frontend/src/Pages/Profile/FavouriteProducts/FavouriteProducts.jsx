@@ -7,10 +7,13 @@ const FavouriteProducts = ({handleCart}) => {
   const [FaviouriteP,setFavouriteP] = useState([]);
 
 
+  
+
 
   useEffect(()=>{
     const fetchFavourite =async ()=>{
       const data = await getFavourite();
+
       setFavouriteP(data);
 
     } 
@@ -27,7 +30,7 @@ const FavouriteProducts = ({handleCart}) => {
 
   return (
 <div className='flex flex-wrap gap-4'>  
-    {FaviouriteP.length===0?<p>No Favourite Product</p>:FaviouriteP.map((product,i)=>(
+    {FaviouriteP.length===0?<p>No Favourite Product</p>:FaviouriteP?.map((product,i)=>(
       <div className='flex flex-col'>
       <ProductCard product={product} key={i} handleCart={handleCart} />
       <button onClick={()=>handleRemoveClick(product._id)} className='text-center p-3 bg-red-600 text-white font-semibold rounded-xl mt-3'>Remove</button>

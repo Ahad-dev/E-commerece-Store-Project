@@ -4,7 +4,7 @@ require('dotenv').config
 
 const auth = async (req,res,next)=>{
     const token = req.header('x-auth-token');
-    console.log(token);
+    // console.log(token);
     
     // get all item stored in cookie
     // const token = req.cookies.token;

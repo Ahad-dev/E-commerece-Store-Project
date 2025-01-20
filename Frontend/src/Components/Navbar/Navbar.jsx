@@ -10,6 +10,7 @@ import { useAuth } from "../../Context/AuthContext";
 
 const Navbar = ({ cart }) => {
   const {isAuthenticated,logout} = useAuth();
+  console.log(cart);
   return (
     <nav className="flex p-5 justify-around items-center">
       <Link

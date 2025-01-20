@@ -1,7 +1,7 @@
 const User = require("../models/userModel")
 
 const getUser = async(req,res)=>{
-    const {email} = req.body
+    const {email} = req.user
     try {
         const user = await User.findOne({email});
         if(!user) return res.status(404).json({msg:"User not Found"});
@@ -61,7 +61,7 @@ const removeFromFavourite = async(req,res)=>{
 
 const getFavourite = async(req,res)=>{
     try{
-        const user = await User.findById(req.user.id).populate("FavouriteProducts");
+        const user = await User.findOne(req.user._id).populate("FavouriteProducts");
         if(!user) return res.status(404).json({msg:"User not find"});
         return res.json(user.FavouriteProducts)
     }catch(err){
