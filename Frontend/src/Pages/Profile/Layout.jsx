@@ -10,16 +10,17 @@ const Layout = () => {
   const { isAuthenticated,logout } = useAuth();
   const [verified,setVerified] = useState(false);
   const [loading,setLoading] = useState(true);
+  const [profilePic,setProfilePic] = useState("");
   console.log({verified})
   useEffect( ()=>{
 
     const fetchUser = async()=>{
       const data = await getUser();
-      console.log(data)
       setLoading(false);
-      console.log(data)
+      console.log({data})
       if(data.isVerified){
         setVerified(true);
+        setProfilePic(data.profilePic)
       }
 
     }
@@ -38,7 +39,7 @@ const Layout = () => {
           <h1 className='text-3xl font-semibold text-center hover:scale-110 transition-all duration-300 mb-14'>
             <Link to="/">Home</Link>
           </h1>
-          <ProfileAvatar />
+          <ProfileAvatar profilePic={profilePic} />
           <ProfileSideBar />
           <button onClick={handleLogout}>Logout</button> {/* Add a logout button */}
         </div>

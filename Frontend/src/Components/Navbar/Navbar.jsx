@@ -84,7 +84,7 @@ const Navbar = ({ cart }) => {
             <div className="flex relative">
               <FaShoppingCart size={25} />
               <span className="absolute -top-2 -right-6 text-black font-semibold shadow-lg  px-2 bg-white rounded-full text-sm">
-                {cart.length}
+                {cart?.items?.length}
               </span>
             </div>
           </Link>

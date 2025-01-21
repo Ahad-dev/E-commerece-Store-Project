@@ -72,3 +72,21 @@ export const getFavourite = async()=>{
   console.log(data);
   return data;
 }
+
+export const updateProfilePic = async(url)=>{
+  const res = await fetch("http://localhost:5000/api/user/profilePic",{
+      method:"POST",
+      credentials: 'include', // Ensure cookies are included in the request
+      headers:{
+        "Content-Type":"application/json",
+        "x-auth-token":localStorage.getItem("token")
+      },
+      body:JSON.stringify({url})
+    })
+    
+    const data =  await res.json();
+
+    console.log({data});
+
+    return data;
+  }

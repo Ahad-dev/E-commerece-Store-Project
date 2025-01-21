@@ -69,10 +69,26 @@ const getFavourite = async(req,res)=>{
     }
 }
 
+const updateProfilePic = async(req,res)=>{
+    const {email} = req.user;
+
+    console.log(req.body.url);
+    try {
+        const user = await User.findOneAndUpdate({email},{$set:{profilePic:req.body.url}});
+        if(!user) return res.status(404).json({msg:"User not Found"});
+        return res.json(user);
+    }
+    catch(err){
+        return res.status(500).json({error:err.message});
+    }
+}
+
+
 module.exports = {
     getUser,
     updateUser,
     addToFavourite,
     removeFromFavourite,
-    getFavourite
+    getFavourite,
+    updateProfilePic
 }

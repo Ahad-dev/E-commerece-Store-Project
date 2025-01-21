@@ -11,6 +11,7 @@ const userSchema = new Schema({
   phoneNumber: { type: String },
   registrationDate: { type: Date, default: Date.now },
   role: { type: String, enum: ["user", "admin"], default: "user" },
+  profilePic: { type: String, default:"" },
   isVerified: { type: Boolean, default: false },
   verificationToken: { type: String },
   verificationTokenExpiresAt: { type: Date },
